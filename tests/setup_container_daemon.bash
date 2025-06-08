@@ -8,12 +8,12 @@ exec_container_daemon() {
 
 getlog_container_daemon() {
     [ -n "$CONTAINER_DAEMON_NAME" ]
-    docker logs "$CONTAINER_DAEMON_NAME"
+    docker logs -t "$CONTAINER_DAEMON_NAME"
 }
 
 wait_for_container_daemon() {
     echo "Waiting for the docker container daemon to be ready..."
-    TIMEOUT=90
+    TIMEOUT=180
     while [ "$TIMEOUT" -ne 0 ]; do
         run exec_container_daemon sh -c "[ -f /tmp/appready ]"
         if [ "$status" -eq 0 ]; then
